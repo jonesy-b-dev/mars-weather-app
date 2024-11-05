@@ -58,7 +58,8 @@ project "WeatherApp"
         }
 
     -- Add dependencies
-    links { "opengl32" }  -- On Windows, linking OpenGL
+    filter { "system:windows" }
+        links { "opengl32" } 
     filter { "system:linux" }
         links { "X11", "pthread", "dl", "GL" }
 
