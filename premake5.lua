@@ -9,23 +9,30 @@ project "WeatherApp"
     targetdir("build/" .. OutputDir .. "/")
     objdir("build/intermediates" .. OutputDir .. "/")
 
+    -- Project files
     files{
         "source/**.h",
         "source/**.hpp",
         "source/**.c",
-        "source/**.cpp",
+        "source/**.cpp"
+    }
+
+    -- Dependency files
+    files{
         -- GLFW
         "Dependencies/glfw-3.4/src/**.c",
         -- GLAD
-        "Dependencies/glad/src/glad.c"
+        "Dependencies/glad/src/glad.c",
+        -- ImGui
+        "Dependencies/ImGui/**.cpp",
+        "Dependencies/ImGui/**.h"
     }
-    print("Compiling GLAD: ", os.isfile("Dependencies/glad/src/glad.c"))
-
 
     includedirs{
         "Dependencies/httplib",
         "Dependencies/glfw-3.4/include",
-        "Dependencies/glad/include"
+        "Dependencies/glad/include",
+        "Dependencies/ImGui"
     }
 
     -- Exclude CMake-specific or non-Windows files 
