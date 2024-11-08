@@ -5,6 +5,8 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <implot.h> 
+
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -53,6 +55,9 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 460");
 
+    // ImPlot
+    ImPlot::CreateContext();
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -72,6 +77,7 @@ int main()
         ImGui::NewFrame();
         //ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
         ImGui::ShowDemoWindow();
+        ImPlot::ShowDemoWindow();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -85,6 +91,7 @@ int main()
     // ------------------------------------------------------------------
     ImGui_ImplGlfw_Shutdown();
     ImGui_ImplOpenGL3_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
     glfwTerminate();
     return 0;

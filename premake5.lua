@@ -25,14 +25,18 @@ project "WeatherApp"
         "Dependencies/glad/src/glad.c",
         -- ImGui
         "Dependencies/ImGui/**.cpp",
-        "Dependencies/ImGui/**.h"
+        "Dependencies/ImGui/**.h",
+        -- ImPlot
+        "Dependencies/ImPlot/**.cpp",
+        "Dependencies/ImPlot/**.h"
     }
 
     includedirs{
         "Dependencies/httplib",
         "Dependencies/glfw-3.4/include",
         "Dependencies/glad/include",
-        "Dependencies/ImGui"
+        "Dependencies/ImGui",
+        "Dependencies/ImPlot"
     }
 
     -- Exclude CMake-specific or non-Windows files 
