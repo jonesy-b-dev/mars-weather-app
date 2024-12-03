@@ -14,20 +14,11 @@ int main()
 {
     Application app;
 
-    app.Start(1300, 900);
+    if (!app.Start(1300, 900))
+    {
+        std::cerr << "Failed to start application\n";
+    }
     
-    // ImGui
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(app.GetWindow(), true);
-    ImGui_ImplOpenGL3_Init("#version 460");
-
-    // ImPlot
-    ImPlot::CreateContext();
 
     // Render loop
     while (!glfwWindowShouldClose(app.GetWindow()))

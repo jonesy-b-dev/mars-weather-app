@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "UserInterface.h"
 #include <glad/glad.h>
 #include <iostream>
 
@@ -32,6 +33,8 @@ bool Application::Start(int width, int height)
         return false;
     }    
 
-    return true;
+    // Initialize user interface
+    InitializeUI(m_window);
 
+    return true;
 }
