@@ -9,6 +9,7 @@ public:
 	void Shutdown();
 	GLFWwindow* GetWindow() { return m_window; };
 private:
+	void ProcessInput(GLFWwindow* window);
 
 public:
 

@@ -3,4 +3,4 @@
 
 bool InitializeUI(GLFWwindow* window);
 void RenderUI();
-bool ShutDownUI();
+void ShutDownUI();

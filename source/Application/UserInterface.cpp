@@ -25,9 +25,26 @@ bool InitializeUI(GLFWwindow* window)
 
 void RenderUI()
 {
+	// Render ImGui
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+	// ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_None);
+	//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+	
+	
+	ImGui::ShowDemoWindow();
+	ImPlot::ShowDemoWindow();
+	
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-bool ShutDownUI()
+void ShutDownUI()
 {
-	return false;
+    // Cleanup
+    ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImPlot::DestroyContext();
+    ImGui::DestroyContext();
 }
