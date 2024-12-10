@@ -29,9 +29,7 @@ void RenderUI()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	// ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_None);
-	//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-	
+    ImGui::DockSpaceOverViewport(ImGuiDockNodeFlags_None, ImGui::GetMainViewport());
 	
 	ImGui::ShowDemoWindow();
 	ImPlot::ShowDemoWindow();
