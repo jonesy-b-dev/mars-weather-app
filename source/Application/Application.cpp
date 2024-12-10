@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "UserInterface.h"
+#include "WeatherController.h"
 #include <glad/glad.h>
 #include <iostream>
 
@@ -35,6 +36,10 @@ bool Application::Start(int width, int height)
 
     // Initialize user interface
     InitializeUI(m_window);
+
+
+    // Get initial data from weather API
+    WeatherController mainController;
 
     return true;
 }
