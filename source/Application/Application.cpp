@@ -41,6 +41,8 @@ bool Application::Start(int width, int height)
     // Get initial data from weather API
     WeatherController mainController;
 
+    mainController.GetWeatherFromCoords(51.43899078590969, 5.4819610785150195);
+
     return true;
 }
 
