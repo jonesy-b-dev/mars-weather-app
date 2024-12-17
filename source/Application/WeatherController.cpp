@@ -2,16 +2,12 @@
 #include <iostream>
 #include <string>
 
-WeatherController::WeatherController()
-{
-	std::cout << "Enter your API key: ";
-	std::cin >> m_api_key;
-}
+std::string WeatherController::m_api_key  = "NoApiKeySet"; 
 
 httplib::Result WeatherController::GetWeatherFromCoords(double lon, double lat)
 {
 	// Construct the query
-    std::string query = m_endpoint + "?lat=" +  std::to_string(lat) + "&lon=" + std::to_string(lon) + "&appid=" + m_api_key;
+    std::string query = m_endpoint + "?lat=" +  std::to_string(lat) + "&lon=" + std::to_string(lon) + "&appid=" + WeatherController::m_api_key;
 
 	// Make the request to the weather API
 	httplib::Result response = m_client.Get(query.c_str());
