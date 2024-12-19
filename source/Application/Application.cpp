@@ -1,6 +1,4 @@
 #include "Application.h"
-#include "UserInterface.h"
-#include "WeatherController.h"
 #include <glad/glad.h>
 #include <iostream>
 
@@ -32,16 +30,13 @@ bool Application::Start(int width, int height)
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return false;
-    }    
-
-    // Initialize user interface
-    InitializeUI(m_window);
-
+    }
 
     // Get initial data from weather API
-    WeatherController mainController;
 
-    mainController.GetWeatherFromCoords(51.43899078590969, 5.4819610785150195);
+    // Initialize user interface
+    m_baseUI.InitializeUI(m_window, &m_mainController);
+
 
     return true;
 }
@@ -58,7 +53,7 @@ void Application::Update()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        RenderUI();
+        m_baseUI.RenderUI();
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(GetWindow());
         glfwPollEvents();
@@ -68,14 +63,16 @@ void Application::Update()
 
 void Application::Shutdown()
 {
-    ShutDownUI();
+    m_baseUI.ShutDownUI();
     glfwTerminate();
 }
 
 void Application::ProcessInput(GLFWwindow* window)
 {
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

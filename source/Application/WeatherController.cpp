@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-std::string WeatherController::m_api_key  = "NoApiKeySet"; 
+std::string WeatherController::m_api_key  = "Not Set"; 
 
 httplib::Result WeatherController::GetWeatherFromCoords(double lon, double lat)
 {

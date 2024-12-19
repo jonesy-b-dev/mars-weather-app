@@ -1,5 +1,7 @@
 #pragma once
 #define GLFW_INCLUDE_NONE
+#include "UserInterface.h"
+#include "WeatherController.h"
 #include <GLFW/glfw3.h>
 class Application
 {
@@ -11,9 +13,10 @@ public:
 private:
 	void ProcessInput(GLFWwindow* window);
 
-public:
 
 private:
 	GLFWwindow* m_window;
+	WeatherController m_mainController;
+	UserInterface m_baseUI;
 };
 

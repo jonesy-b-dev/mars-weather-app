@@ -10,8 +10,9 @@
 
 bool m_showAPIkeyWindow = true;
 
-bool InitializeUI(GLFWwindow* window)
+bool UserInterface::InitializeUI(GLFWwindow* window, WeatherController* controller)
 {
+    // Set the weather controller reference
     // ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -27,25 +28,7 @@ bool InitializeUI(GLFWwindow* window)
 	return false;
 }
 
-
-void ApiKeyWindow()
-{
-    ImGui::Begin("Enter API Key", nullptr, ImGuiWindowFlags_NoResize);
-    float availWidth = ImGui::GetContentRegionAvail().x;
-    float totalWidth = 315.0f;
-    float offset = (availWidth - totalWidth) * 0.5f;
-    ImGui::SetCursorPosX(offset);
-    ImGui::InputText("##API key", &WeatherController::m_api_key);
-    ImGui::SameLine();
-    if (ImGui::Button("Continue"))
-    {
-        std::cout << WeatherController::m_api_key;
-        m_showAPIkeyWindow = false;
-    }
-    ImGui::End();
-}
-
-void RenderUI()
+void UserInterface::RenderUI()
 {
 	// Render ImGui
 	ImGui_ImplOpenGL3_NewFrame();
@@ -60,12 +43,49 @@ void RenderUI()
         ApiKeyWindow();
     }
 	
+    // Only show other windows when api key is set
+    if (!m_showAPIkeyWindow)
+    {
+        TemperatureBars();
+    }
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+void UserInterface::ApiKeyWindow()
+{
+    ImGui::Begin("Enter API Key", nullptr, ImGuiWindowFlags_NoResize);
+    //do
+    //{
+    //    //baseConstroller
+    //}
+    float availWidth = ImGui::GetContentRegionAvail().x;
+    float totalWidth = 315.0f;
+    float offset = (availWidth - totalWidth) * 0.5f;
+    ImGui::SetCursorPosX(offset);
+    ImGui::InputText("##API key", &WeatherController::m_api_key);
+    ImGui::SameLine();
+    if (ImGui::Button("Continue"))
+    {
+        std::cout << WeatherController::m_api_key;
+        m_showAPIkeyWindow = false;
+    }
+    ImGui::End();
+}
 
-void ShutDownUI()
+void UserInterface::TemperatureBars()
+{
+    ImGui::Begin("Temperature Bars");
+    ImPlot::BeginPlot("Temperature");
+    float xdata[4] = { 1, 2, 3, 4 };
+    float ydata[4] = { 1, 2, 3, 4 };
+    ImPlot::PlotBars("Temp in Celcius", xdata, 4);
+    ImPlot::EndPlot();
+    ImGui::End();
+}
+
+
+void UserInterface::ShutDownUI()
 {
     // Cleanup
     ImGui_ImplGlfw_Shutdown();
