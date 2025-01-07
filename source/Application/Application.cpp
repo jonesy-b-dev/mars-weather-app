@@ -27,7 +27,7 @@ bool Application::Start(int width, int height)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-        return nullptr;
+        return false;
     }
     glfwMakeContextCurrent(m_window);
    // glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
