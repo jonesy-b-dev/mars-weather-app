@@ -6,9 +6,20 @@ std::string WeatherController::m_api_key  = "Not Set";
 
 httplib::Result WeatherController::GetWeatherFromCoords(double lon, double lat)
 {
-	// Construct the query
-    std::string query = m_endpoint + "?lat=" +  std::to_string(lat) + "&lon=" + std::to_string(lon) + "&appid=" + WeatherController::m_api_key;
+    return MakeRequest(lon, lat, "/weather");
+}
 
+httplib::Result WeatherController::GetFiveDaysForeCast(double lon, double lat)
+{
+    return MakeRequest(lon, lat, "/forecast");
+}
+
+httplib::Result WeatherController::MakeRequest(double lon, double lat, std::string endPoint)
+{
+	// Construct the query
+    std::string query = m_base_url + m_APIversion + endPoint + "?lat=" +  std::to_string(lat) + "&lon=" + std::to_string(lon) + "&appid=" + WeatherController::m_api_key;
+
+    std::cout <<"\n" << query << "\n";
 	// Make the request to the weather API
 	httplib::Result response = m_client.Get(query.c_str());
 

@@ -13,6 +13,7 @@ bool m_showAPIkeyWindow = true;
 bool UserInterface::InitializeUI(GLFWwindow* window, WeatherController* controller)
 {
     // Set the weather controller reference
+    m_baseConstroller = controller;
     // ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -20,7 +21,10 @@ bool UserInterface::InitializeUI(GLFWwindow* window, WeatherController* controll
     (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     ImGui::StyleColorsDark();
+
+    // goes wrong here fsr
     ImGui_ImplGlfw_InitForOpenGL(window, true);
+
     ImGui_ImplOpenGL3_Init("#version 460");
 
     // ImPlot
@@ -40,27 +44,23 @@ void UserInterface::RenderUI()
 	//ImPlot::ShowDemoWindow();
     if (m_showAPIkeyWindow)
     {
-        ApiKeyWindow();
+        SetupWindow();
     }
 	
     // Only show other windows when api key is set
     if (!m_showAPIkeyWindow)
     {
-        TemperatureBars();
+        //TemperatureBars();
     }
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void UserInterface::ApiKeyWindow()
+void UserInterface::SetupWindow()
 {
     ImGui::Begin("Enter API Key", nullptr, ImGuiWindowFlags_NoResize);
-    //do
-    //{
-    //    //baseConstroller
-    //}
-    float availWidth = ImGui::GetContentRegionAvail().x;
     float totalWidth = 315.0f;
+    float availWidth = ImGui::GetContentRegionAvail().x;
     float offset = (availWidth - totalWidth) * 0.5f;
     ImGui::SetCursorPosX(offset);
     ImGui::InputText("##API key", &WeatherController::m_api_key);
@@ -76,6 +76,12 @@ void UserInterface::ApiKeyWindow()
 void UserInterface::TemperatureBars()
 {
     ImGui::Begin("Temperature Bars");
+    do
+    {
+        m_baseConstroller->GetWeatherFromCoords(5.4819610785150195, 51.43899078590969);
+    }
+    while (ImGui::Button("Refresh"));
+
     ImPlot::BeginPlot("Temperature");
     float xdata[4] = { 1, 2, 3, 4 };
     float ydata[4] = { 1, 2, 3, 4 };

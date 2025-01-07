@@ -9,9 +9,9 @@ public:
 	void ShutDownUI();
 	
 private:
-	WeatherController* baseConstroller;
+	WeatherController* m_baseConstroller;
 	
 	// Windows
-	void ApiKeyWindow();
+	void SetupWindow();
 	void TemperatureBars();
 };
