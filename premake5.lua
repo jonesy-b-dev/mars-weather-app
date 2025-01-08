@@ -37,7 +37,8 @@ project "WeatherApp"
         "Dependencies/glad/include",
         "Dependencies/ImGui",
         "Dependencies/ImPlot",
-        "Dependencies/Stb"
+        "Dependencies/Stb",
+        "Dependencies/glm"
     }
 
     -- Exclude CMake-specific or non-Windows files 
