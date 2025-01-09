@@ -5,6 +5,7 @@ workspace "WeatherApp"
 project "WeatherApp"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "C++17"
     OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
     targetdir("build/" .. OutputDir .. "/")
     objdir("build/intermediates" .. OutputDir .. "/")
