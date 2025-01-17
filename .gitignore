@@ -3,3 +3,4 @@ build
 *.sln
 *.vcxproj
 *.vcxproj.*
+Renderdoc captures
