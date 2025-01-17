@@ -4,6 +4,7 @@
 #include "WeatherController.h"
 #include "Renderer.h"
 #include <GLFW/glfw3.h>
+#include "shader.h"
 
 class Application
 {
@@ -14,6 +15,7 @@ public:
 	GLFWwindow* GetWindow() { return m_window; };
 private:
 	void ProcessInput(GLFWwindow* window);
+    GLuint VAO, VBO, EBO;
 
 
 private:
@@ -21,5 +23,7 @@ private:
 	Renderer mainRenderer;
 	WeatherController m_mainController;
 	UserInterface m_baseUI;
+	Shader* mainShader;
+	int textureID;
 };
 

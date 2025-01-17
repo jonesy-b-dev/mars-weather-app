@@ -1,5 +1,4 @@
 #include "Application/Application.h"
-#include <iostream>
 
 int main()
 {
@@ -12,6 +11,6 @@ int main()
     }
 
     app.Update();
-
+    app.Shutdown();
     return 0;
 }

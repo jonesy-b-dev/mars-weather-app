@@ -6,6 +6,7 @@ class WeatherController
 {
 public:
 	httplib::Result	GetWeatherFromCoords(double lon, double lat);
+	httplib::Result	GetWeatherFromCoords2(double lon, double lat);
 	httplib::Result GetFiveDaysForeCast(double lon, double lat);
 	static std::string m_api_key;
 private:

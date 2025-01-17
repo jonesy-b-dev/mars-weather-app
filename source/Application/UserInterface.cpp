@@ -50,7 +50,7 @@ void UserInterface::RenderUI()
     // Only show other windows when api key is set
     if (!m_showAPIkeyWindow)
     {
-        //TemperatureBars();
+        TemperatureBars();
     }
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -78,7 +78,7 @@ void UserInterface::TemperatureBars()
     ImGui::Begin("Temperature Bars");
     do
     {
-        m_baseConstroller->GetWeatherFromCoords(5.4819610785150195, 51.43899078590969);
+        m_baseConstroller->GetWeatherFromCoords2(5.4819610785150195, 51.43899078590969);
     }
     while (ImGui::Button("Refresh"));
 

@@ -1,6 +1,6 @@
 #include "Application.h"
 #include <iostream>
-
+#include <stb_image.h>
 
 bool Application::Start(int width, int height)
 {
@@ -39,13 +39,53 @@ bool Application::Start(int width, int height)
         return false;
     }
 
-    // Get initial data from weather API
+	glViewport(0, 0, width, height);
 
-    // Initialize user interface
-    m_baseUI.InitializeUI(m_window, &m_mainController);
+    //Create shaders
 
-    // Initialize textures
+	// Initialize buffers
+	// Vertex data
+	float vertices[] = {
+		// Positions    // Texture Coords
+		-1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 1.0f,
+        -1.0f,  1.0f,  0.0f, 1.0f
+    };
 
+    unsigned int indices[] = {
+        0, 1, 2,
+        0, 2, 3
+    };
+    // Create VAO, VBO, and EBO
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+	mainShader = new Shader("shaders/vertex.vert", "shaders/fragment.frag");
+    mainShader->use();
+	// Initialize user interface
+	m_baseUI.InitializeUI(m_window, &m_mainController);
+
+// Set the sampler uniform to use texture unit 0
+
+    // Load initial texture
+    int textureID = mainRenderer.LoadBackground("Assets/cat.png");
+    mainShader->setInt("texture1", textureID);
     return true;
 }
 
@@ -58,7 +98,7 @@ void Application::Update()
         ProcessInput(GetWindow());
 
         // render
-        if (!mainRenderer.Update())
+        if (!mainRenderer.Update(EBO))
         {
             std::cerr << "Application update loop failed, exiting....\n";
             break;
@@ -75,6 +115,9 @@ void Application::Update()
 void Application::Shutdown()
 {
     mainRenderer.Shutdown();
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
     m_baseUI.ShutDownUI();
     glfwTerminate();
 }
@@ -85,4 +128,7 @@ void Application::ProcessInput(GLFWwindow* window)
     {
         glfwSetWindowShouldClose(window, true);
     }
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	    mainRenderer.LoadBackground("Assets/tom.jpg");
+	}
 }
