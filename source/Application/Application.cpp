@@ -70,9 +70,11 @@ bool Application::Start(int width, int height)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+    // Pos attribute
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    // Tex coords attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
@@ -80,8 +82,6 @@ bool Application::Start(int width, int height)
     mainShader->use();
 	// Initialize user interface
 	m_baseUI.InitializeUI(m_window, &m_mainController);
-
-// Set the sampler uniform to use texture unit 0
 
     // Load initial texture
     int textureID = mainRenderer.LoadBackground("Assets/cat.png");
@@ -96,14 +96,18 @@ void Application::Update()
     {
         // input
         ProcessInput(GetWindow());
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 
+        mainShader->use();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        mainShader->setInt("texture1", 0);
         // render
-        if (!mainRenderer.Update(EBO))
+        if (!mainRenderer.Update(VAO))
         {
             std::cerr << "Application update loop failed, exiting....\n";
             break;
         }
-
         m_baseUI.RenderUI();
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(GetWindow());

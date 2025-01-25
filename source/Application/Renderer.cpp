@@ -37,9 +37,9 @@ GLFWwindow* Renderer::Initialize(int width, int height)
 bool Renderer::Update(GLuint EBO)
 {
     // Render
-    glClear(GL_COLOR_BUFFER_BIT);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    RenderImage(m_texture);
+    glBindVertexArray(EBO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    //RenderImage(m_texture);
 	return true;
 }
 
